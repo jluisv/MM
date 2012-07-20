@@ -25,7 +25,7 @@
     </xen:checkboxunit>
     
     <xen:selectunit label="{xen:phrase ragtek_mm_change_sticky}:" name="topic_pin" value="{$multimod.topic_pin}">
-        <xen:option value="leave">leave</xen:option>
+        <xen:option value="leave">{xen:phrase ragtek_mm_leave}</xen:option>
         <xen:option value="stick">{xen:phrase stick}</xen:option>
         <xen:option value="unstick">{xen:phrase unstick}</xen:option>
     </xen:selectunit>
@@ -58,7 +58,7 @@
 
 
     <hr />
-    <xen:checkboxunit label="add reply">
+    <xen:checkboxunit label="{xen:phrase post_reply}">
         <xen:option name="add_reply" selected="{$multimod.add_reply}">{xen:phrase reply_to_thread}</xen:option>
     </xen:checkboxunit>
 
