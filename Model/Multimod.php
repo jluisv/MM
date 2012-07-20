@@ -22,7 +22,8 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
         return $this->_getDb()->fetchRow($query, $id);
     }
 
-    public function prepareMultiMod(&$multimod){
+    public function prepareMultiMod(&$multimod)
+    {
         $multimod['active_nodes'] = explode(',', $multimod['active_nodes']);
         return $multimod;
     }
@@ -43,11 +44,14 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
     /**
      * @return bool|int
      */
-    public function canUseMultiModeration(){
-        return XenForo_Visitor::getInstance()->hasPermission('general', 'ragtek_mm_canUseMultimod');
+    public function canUseMultiModeration(array $forum)
+    {
+        $return = XenForo_Visitor::getInstance()->hasPermission('general', 'ragtek_mm_canUseMultimod');
+        return $return;
     }
 
-    public function getAvailableMultiMods(array $forum){
+    public function getAvailableMultiMods(array $forum)
+    {
 
         $conditions = array('node_id' => $forum['node_id']);
         $where = $this->prepareMultiModCriteria($conditions);
@@ -57,26 +61,38 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
         WHERE {$where}
         ";
 
-         return $this->fetchAllKeyed($query, 'multimod_id');
+        $multimods = $this->fetchAllKeyed($query, 'multimod_id');
+
+        foreach ($multimods AS $id => $mod) {
+
+            $nodes = explode(',', $mod['active_nodes']);
+            if (!in_array($forum['node_id'], $nodes) AND !in_array(0, $nodes)) {
+                unset($multimods[$id]);
+            }
+        }
+        return $multimods;
     }
 
-    public function prepareMultiModCriteria(array $conditions){
+
+    // TODO quick bug fix => remove this and filter the nodes later
+    // TODO this should be checked next week
+    public function prepareMultiModCriteria(array $conditions)
+    {
         $db = $this->_getDb();
         $sqlConditions = array();
-        if (!empty($conditions['node_id']))
-        {
-            $sqlConditions[] = 'multimod.active_nodes IN (0,' . $db->quote($conditions['node_id']) . ')';
+        if (!empty($conditions['node_id'])) {
+            #    $sqlConditions[] = 'multimod.active_nodes FIND_IN_SET(0,' . $db->quote($conditions['node_id']) . ')';
         }
 
         return $this->getConditionsForClause($sqlConditions);
     }
 
 
+    public function runMultiMod(array $thread, array $multiMod)
+    {
 
-    public function runMultiMod(array $thread, array $multiMod){
 
-
-        if ($multiMod['add_reply'] && $multiMod['reply'] != ''){
+        if ($multiMod['add_reply'] && $multiMod['reply'] != '') {
             $postCreater = XenForo_Visitor::getInstance()->toArray();
             Ragtek_MM_Helper::createPost($postCreater, $thread['thread_id'], $multiMod['reply']);
         }
@@ -85,33 +101,33 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
         $dw = XenForo_DataWriter::create('XenForo_DataWriter_Discussion_Thread');
         $dw->setExistingData($thread['thread_id']);
 
-        if ($multiMod['topic_pin'] != 'leave'){
+        if ($multiMod['topic_pin'] != 'leave') {
             $dw->set('sticky', ($multiMod['topic_pin'] == 'stick') ? 1 : 0);
         }
 
         $threadTitle = $dw->get('title');
 
-        if ($multiMod['title_start'] != ''){
+        if ($multiMod['title_start'] != '') {
             $threadTitle = $multiMod['title_start'] . ' ' . $threadTitle;
         }
 
-        if ($multiMod['title_end'] != ''){
+        if ($multiMod['title_end'] != '') {
             $threadTitle = $threadTitle . $multiMod['title_end'];
         }
         $dw->set('title', $threadTitle);
 
-        if ($multiMod['move_to_node']){
+        if ($multiMod['move_to_node']) {
             $dw->set('node_id', $multiMod['move_to_node']);
         }
 
-        if ($multiMod['set_thread_prefix']){
-            $dw->set('prefix_id',$multiMod['set_thread_prefix']);
+        if ($multiMod['set_thread_prefix']) {
+            $dw->set('prefix_id', $multiMod['set_thread_prefix']);
         }
-        if ($multiMod['topic_state'] != 'leave'){
+        if ($multiMod['topic_state'] != 'leave') {
             $dw->set('discussion_state', $multiMod['topic_state']);
         }
 
-        if ($multiMod['close_thread']){
+        if ($multiMod['close_thread']) {
             $dw->set('discussion_open', 0);
         }
 
@@ -119,7 +135,6 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
 
         $dw->save();
     }
-
 
 
     ##additionalContent##

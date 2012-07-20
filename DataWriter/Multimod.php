@@ -56,12 +56,12 @@ class Ragtek_MM_DataWriter_Multimod extends XenForo_DataWriter {
         $nodes = array_map('intval', $nodes);
         $nodes = array_unique($nodes);
             sort($nodes, SORT_NUMERIC);
-
+            // BUGFIX
             $zeroKey = array_search(0, $nodes);
-            if ($zeroKey !== false)
-            {
-                unset($nodes[$zeroKey]);
-            }
+           # if ($zeroKey !== false)
+          #  {
+          #      unset($nodes[$zeroKey]);
+           # }
 
            $this->_nodes = $nodes;
     }
