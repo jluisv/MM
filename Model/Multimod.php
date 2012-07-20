@@ -52,17 +52,17 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
 
     public function getAvailableMultiMods(array $forum)
     {
-
-        $conditions = array('node_id' => $forum['node_id']);
-        $where = $this->prepareMultiModCriteria($conditions);
-
         $query = "
-        SELECT * FROM xf_r_multimod AS multimod
-        WHERE {$where}
+          SELECT * FROM xf_r_multimod AS multimod
         ";
 
         $multimods = $this->fetchAllKeyed($query, 'multimod_id');
 
+        $multimods = $this->_filterNodes($multimods, $forum);
+        return $multimods;
+    }
+
+    protected function _filterNodes(array $multimods, array $forum){
         foreach ($multimods AS $id => $mod) {
 
             $nodes = explode(',', $mod['active_nodes']);
@@ -73,15 +73,18 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
         return $multimods;
     }
 
-
-    // TODO quick bug fix => remove this and filter the nodes later
-    // TODO this should be checked next week
+    /**
+     * @deprecated since 1.0.1
+     *
+     * @param array $conditions
+     * @return string
+     */
     public function prepareMultiModCriteria(array $conditions)
     {
         $db = $this->_getDb();
         $sqlConditions = array();
         if (!empty($conditions['node_id'])) {
-            #    $sqlConditions[] = 'multimod.active_nodes FIND_IN_SET(0,' . $db->quote($conditions['node_id']) . ')';
+                $sqlConditions[] = 'multimod.active_nodes IN (0,' . $db->quote($conditions['node_id']) . ')';
         }
 
         return $this->getConditionsForClause($sqlConditions);

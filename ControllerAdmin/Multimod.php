@@ -81,7 +81,6 @@ class Ragtek_MM_ControllerAdmin_Multimod extends XenForo_ControllerAdmin_Abstrac
             $dw->setExistingData($id);
         }
         $dw->bulkSet($dwInput);
-        $dw->setNodes($dwInput['active_nodes']);
         $dw->save();
 
         return $this->responseRedirect(

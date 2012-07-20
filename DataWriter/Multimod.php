@@ -45,27 +45,15 @@ class Ragtek_MM_DataWriter_Multimod extends XenForo_DataWriter {
 		return $this->getModelFromCache('Ragtek_MM_Model_Multimod');
 	}
 
-    function _preSave(){
-        $this->set('active_nodes', implode(',', $this->_nodes));
-    }
-
     protected $_nodes = array();
 
-    public function setNodes(array $nodes){
-
-        $nodes = array_map('intval', $nodes);
-        $nodes = array_unique($nodes);
-            sort($nodes, SORT_NUMERIC);
-            // BUGFIX
-            $zeroKey = array_search(0, $nodes);
-           # if ($zeroKey !== false)
-          #  {
-          #      unset($nodes[$zeroKey]);
-           # }
-
-           $this->_nodes = $nodes;
+    public function set($field, $value, $tableName = '', array $options = null)
+    {
+        if ($field == 'active_nodes'){
+            $value =  implode(',', $value);
+        }
+        parent::set($field, $value, $tableName, $options);
     }
-
 
 
 	##additionalContent##
