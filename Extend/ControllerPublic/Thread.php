@@ -80,7 +80,7 @@ class Ragtek_MM_Extend_ControllerPublic_Thread extends
         $info = $this->_getMultimodModel()->getMultimodById($id, $fetchOptions);
 
         if (empty($info)) {
-            throw $this->responseException($this->responseError("Multimod not found", 404)); // TODO phrase
+            throw $this->responseException($this->responseError(new XenForo_Phrase('ragtek_mm_not_found'), 404));
         }
         return $info;
     }
