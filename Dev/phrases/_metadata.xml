@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<metadata>
+  <item title="active_node" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="admin_navigation_ragtek_mm_multimoderation" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="admin_permission_ragtek_manage_multimod" global_cache="0" version_id="3" version_string="1.0.0 RC3"/>
+  <item title="confirm_deletion_of_multimod" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="create_new_multimod" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="dont_move" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="handle_multimod" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="handle_multithread_for" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="permission_general_ragtek_mm_canUseMultimod" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="ragtek_mm" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="ragtek_mm_add_to_threadend" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="ragtek_mm_add_to_threadstart" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="ragtek_mm_change_sticky" global_cache="0" version_id="3" version_string="1.0.0 RC3"/>
+  <item title="ragtek_mm_change_thread_state" global_cache="0" version_id="3" version_string="1.0.0 RC3"/>
+  <item title="ragtek_mm_create_new" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="ragtek_mm_not_found" global_cache="0" version_id="3" version_string="1.0.0 RC3"/>
+  <item title="ragtek_mm_prefix_explain" global_cache="0" version_id="3" version_string="1.0.0 RC3"/>
+  <item title="ragtek_mm_set_threadprefix_id" global_cache="0" version_id="3" version_string="1.0.0 RC3"/>
+  <item title="ragtek_multimods" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="stick" global_cache="0" version_id="1" version_string="1.0.0"/>
+  <item title="unstick" global_cache="0" version_id="1" version_string="1.0.0"/>
+</metadata>

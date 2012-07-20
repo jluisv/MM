@@ -1,0 +1,18 @@
+<xen:if is="{$multimods}">
+    <div class="pageNavLinkGroup">
+        <div class="linkGroup">
+            <div class="Popup">
+                <a rel="Menu">{xen:phrase ragtek_mm}</a>
+                <div class="Menu">
+                    <div class="primaryContent menuHeader"><h3>{xen:phrase ragtek_mm}</h3></div>
+                    <ul class="secondaryContent blockLinksList">
+						<xen:foreach loop="$multimods" value="$mod">   
+							<li><a href="{xen:link 'threads/run-multi-mod', $thread, 'mod_id={$mod.multimod_id}'}" class="OverlayTrigger">{$mod.title}</a></li>
+						</xen:foreach>
+                    </ul>
+
+                </div>
+             </div>
+            </div>
+            </div>
+</xen:if>

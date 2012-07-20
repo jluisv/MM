@@ -1,0 +1,33 @@
+<xen:title>{xen:phrase ragtek_multimods}</xen:title>
+
+<xen:topctrl><a href="{xen:adminlink 'multimods/add'}" class="button">{xen:phrase create_new_multimod}</a></xen:topctrl>
+
+<xen:require css="filter_list.css" />
+<xen:require js="js/xenforo/filter_list.js" />
+
+<xen:form action="{xen:adminlink multimods}" class="section">
+
+	<h2 class="subHeading">
+		<xen:include template="filter_list_controls" />
+		{xen:phrase ragtek_multimods}
+	</h2>
+
+	<ol class="FilterList Scrollable">
+		<xen:foreach loop="$multimods" value="$mod">
+			<xen:listitem id="{$mod.multimod_id}"
+				label="{$mod.title}"
+				
+			href="{xen:adminlink 'multimods/edit', $mod}"
+				delete="{xen:adminlink 'multimods/delete', $mod}"
+				>
+
+				<xen:html>
+					<a href="{xen:adminlink multimods/edit, $mod}" class="secondaryContent">{xen:phrase edit}</a>
+				</xen:html>
+			</xen:listitem>
+		</xen:foreach>
+	</ol>
+
+	
+	<p class="sectionFooter">{xen:phrase showing_x_of_y_items, 'count=<span class="FilterListCount">{xen:count $multimods}</span>', 'total={xen:count $multimods}'}</p>
+</xen:form>

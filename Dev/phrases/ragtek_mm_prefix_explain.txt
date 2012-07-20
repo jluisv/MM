@@ -1,0 +1,2 @@
+You need to insert the ID of the thread prefix.<br />
+The prefix needs to be global, or available in the forum where's the thread placed/ or will be moved!

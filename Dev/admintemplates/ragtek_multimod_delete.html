@@ -1,0 +1,16 @@
+<xen:title>del: {$multimod.title}</xen:title>
+
+<xen:navigation>
+	<xen:breadcrumb href="{xen:adminlink 'multimods/edit', $multimod}">{$multimod.title}</xen:breadcrumb>
+</xen:navigation>
+
+<xen:require css="delete_confirmation.css" />
+
+<xen:form action="{xen:adminlink 'multimods/delete', $multimod}" class="deleteConfirmForm formOverlay">
+
+	<p>{xen:phrase confirm_deletion_of_multimod} {$multimod.title}</p>
+
+	<xen:submitunit save="{xen:phrase delete}" />
+	
+	<input type="hidden" name="_xfConfirm" value="1" />
+</xen:form>

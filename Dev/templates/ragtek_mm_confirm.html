@@ -1,0 +1,22 @@
+<xen:title>{xen:phrase handle_multithread_for} {$thread.title}</xen:title>
+
+<xen:navigation>
+    <xen:breadcrumb source="$nodeBreadCrumbs" />
+    <xen:breadcrumb href="{xen:link full:threads, $thread}">{xen:helper threadPrefix, $thread}{$thread.title}</xen:breadcrumb>
+</xen:navigation>
+
+<xen:container var="$bodyClasses">{xen:helper nodeClasses, $nodeBreadCrumbs, $forum}</xen:container>
+<xen:container var="$searchBar.thread"><xen:include template="search_bar_thread_only" /></xen:container>
+<xen:container var="$searchBar.forum"><xen:include template="search_bar_forum_only" /></xen:container>
+
+<form action="{xen:link 'threads/run-multi-mod', $thread, 'mod_id={$multimod.multimod_id}'}" method="post" class="xenForm formOverlay">
+
+
+    <dl class="ctrlUnit submitUnit">
+        <dt></dt>
+        <dd><input type="submit" value="{xen:phrase handle_multimod}" class="button primary" /></dd>
+    </dl>
+
+    <input type="hidden" name="_xfConfirm" value="1" />
+    <input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+</form>
