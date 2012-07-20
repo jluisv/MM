@@ -17,5 +17,5 @@ Everyone has a different setup - but for those regular jobs that your moderator 
 
 
 
-# Additional Data:
+** Additional Data: **
 This addon adds 1 query for mods on the thread page
