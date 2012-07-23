@@ -5,6 +5,12 @@ class Ragtek_MM_Install
 
     CONST ADDON_PRIMARY_TABLE = 'xf_r_multimod';
 
+
+    public function _installVersion10(){
+        $query['add_index'] = "ALTER TABLE  " . self::ADDON_PRIMARY_TABLE . " ADD INDEX  `title` (  `title` )";
+        $this->_runQuery($query);
+    }
+
     public function _installVersion4()
     {
         self::addColumn(self::ADDON_PRIMARY_TABLE, 'topic_state', "VARCHAR( 25 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT  'leave'");
