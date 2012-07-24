@@ -28,8 +28,8 @@ class Ragtek_MM_ControllerAdmin_Multimod extends XenForo_ControllerAdmin_Abstrac
     public function actionAdd()
     {
         $viewParams = array(
-            'multimod' => array('active_nodes' => array()),
-            'nodes' => $this->getModelFromCache('XenForo_Model_Node')->getViewableNodeList()
+            'multimod' => array('active_nodes' => array(0=>0)),
+            'nodes' => $this->getModelFromCache('XenForo_Model_Node')->getViewableNodeList(),
         );
 
         return $this->responseView('Ragtek_MM_ViewAdmin_Add', 'ragtek_multimod_edit', $viewParams);
@@ -44,8 +44,7 @@ class Ragtek_MM_ControllerAdmin_Multimod extends XenForo_ControllerAdmin_Abstrac
 
         $viewParams = array(
             'multimod' => $multimod,
-            'nodes' => $this->getModelFromCache('XenForo_Model_Node')->getViewableNodeList()
-
+            'nodes' => $this->getModelFromCache('XenForo_Model_Node')->getViewableNodeList(),
         );
 
         return $this->responseView('Ragtek_MM_ViewAdmin_Edit', 'ragtek_multimod_edit', $viewParams);
@@ -73,8 +72,6 @@ class Ragtek_MM_ControllerAdmin_Multimod extends XenForo_ControllerAdmin_Abstrac
 
         $input['reply'] = $this->getHelper('Editor')->getMessageText('reply', $this->_input);
         $dwInput['reply'] = XenForo_Helper_String::autoLinkBbCode($input['reply']);
-
-
 
         $dw = $this->_getMultimodDataWriter();
         if ($id) {
@@ -142,6 +139,10 @@ class Ragtek_MM_ControllerAdmin_Multimod extends XenForo_ControllerAdmin_Abstrac
         return XenForo_DataWriter::create('Ragtek_MM_DataWriter_Multimod');
     }
 
-
-    ##additionalContent##
+    /**
+     * @return XenForo_Model_ThreadPrefix
+     */
+    protected function _getPrefixModel(){
+        return $this->getModelFromCache('XenForo_Model_ThreadPrefix');
+    }
 }

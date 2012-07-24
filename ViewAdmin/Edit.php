@@ -3,7 +3,8 @@
 /**
  *  create the editor
  */
-class Ragtek_MM_ViewAdmin_Edit extends XenForo_ViewAdmin_Base{
+class Ragtek_MM_ViewAdmin_Edit extends XenForo_ViewAdmin_Base
+{
 
 
     public function renderHtml()

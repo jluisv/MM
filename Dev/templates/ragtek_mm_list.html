@@ -1,0 +1,14 @@
+<xen:title>{xen:phrase ragtek_multimods}</xen:title>
+<div class="secondaryContent">
+        <ol>
+			<xen:if is="{$multimods}">
+            <xen:foreach loop="$multimods" value="$mod">
+                <li class="listItem PopupItemLink">
+                   <a href="{xen:link 'threads/run-multi-mod', $thread, 'mod_id={$mod.multimod_id}'}" class="OverlayTrigger">{$mod.title}</a>
+                </li>
+            </xen:foreach>
+				<xen:else />
+				{xen:phrase ragtek_mm_nothing_available}
+			</xen:if>
+        </ol>
+</div>

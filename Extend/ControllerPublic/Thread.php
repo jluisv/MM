@@ -1,11 +1,11 @@
 <?php
 
 /**
- *   overwrite original XenForo_ControllerPublic_Thread class
+ *   overwrite original XenForo_ControllerPublic_Thread
  */
 class Ragtek_MM_Extend_ControllerPublic_Thread extends
     #XenForo_ControllerPublic_Thread
-    XFCP_Ragtek_MM_Extend_ControllerPublic_Thread
+   XFCP_Ragtek_MM_Extend_ControllerPublic_Thread
 {
 
     /**
@@ -22,10 +22,27 @@ class Ragtek_MM_Extend_ControllerPublic_Thread extends
             && $this->_getMultimodModel()->canUseMultiModeration($parentReturn->params['forum'])
             ) {
             $parentReturn->params += array(
-                'multimods' => $this->_getMultimodModel()->getAvailableMultiMods($parentReturn->params['forum'])
+                'show_multimods' => true
             );
         }
         return $parentReturn;
+    }
+
+
+    public function actionGetMultiMods(){
+        $threadId = $this->_input->filterSingle('thread_id', XenForo_Input::UINT);
+
+        $ftpHelper = $this->getHelper('ForumThreadPost');
+        list($thread, $forum) = $ftpHelper->assertThreadValidAndViewable($threadId);
+
+        if (!$this->_getMultimodModel()->canUseMultiModeration($forum)) {
+            return $this->getNoPermissionResponseException();
+        }
+        $viewParams = array(
+            'multimods' => $this->_getMultimodModel()->getAvailableMultiMods(array('node_id' => $forum)),
+            'thread' => $thread
+            );
+        return $this->responseView('Ragtek_MM_ViewPublic_Get', 'ragtek_mm_list',$viewParams);
     }
 
     /**
@@ -43,7 +60,7 @@ class Ragtek_MM_Extend_ControllerPublic_Thread extends
         list($thread, $forum) = $ftpHelper->assertThreadValidAndViewable($threadId);
 
         if (!$this->_getMultimodModel()->canUseMultiModeration($forum)) {
-            throw new XenForo_Exception('nothing to do here');
+            return $this->getNoPermissionResponseException();
         }
 
         $multiMod = $this->_getMultimodOrError($multiModId);

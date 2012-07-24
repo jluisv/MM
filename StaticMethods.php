@@ -52,15 +52,13 @@ class Ragtek_MM_StaticMethods
      */
     public static function templateHooks($name, &$contents, array $params, XenForo_Template_Abstract $template)
     {
-        if ($name == 'thread_view_pagenav_before') {
+        if ($name == 'thread_view_pagenav_before' && $template->getParam('show_multimods')) {
             $contents .= $template->create('ragtek_mm_multimod', $template->getParams());
         }
 
         ##additionalHook##
 
     }
-
-##additionalContent##
 
 
     public static function fileHashes(XenForo_ControllerAdmin_Abstract $controller, array &$hashes)

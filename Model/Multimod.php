@@ -5,6 +5,7 @@
  */
 class Ragtek_MM_Model_Multimod extends XenForo_Model
 {
+
     /**
      * Gets the specified Multimod if it exists.
      *
@@ -38,23 +39,26 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
         return $this->fetchAllKeyed('
 			SELECT *
 			FROM xf_r_multimod
-		', '');
+			ORDER by title
+		', 'multimod_id');
     }
 
     /**
-     * @return bool|int
+     * returns the available multimods for the specific node
+     *
+     * @param array $conditions
+     * @param array $fetchOptions
+     * @return array
      */
-    public function canUseMultiModeration(array $forum)
+    public function getAvailableMultiMods(array $conditions = array(), array $fetchOptions = array())
     {
-        $return = XenForo_Visitor::getInstance()->hasPermission('general', 'ragtek_mm_canUseMultimod');
-        return $return;
-    }
+        $forum = $conditions['node_id'];
+        $sqlClauses = $this->prepareMultiModFetchOptions($fetchOptions);
 
-    public function getAvailableMultiMods(array $forum)
-    {
-        $query = "
-          SELECT * FROM xf_r_multimod AS multimod
-        ";
+        $query = '
+          SELECT multimod.*
+          FROM xf_r_multimod AS multimod
+         ' . $sqlClauses['orderClause'];
 
         $multimods = $this->fetchAllKeyed($query, 'multimod_id');
 
@@ -62,7 +66,9 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
         return $multimods;
     }
 
-    protected function _filterNodes(array $multimods, array $forum){
+
+    protected function _filterNodes(array $multimods, array $forum)
+    {
         foreach ($multimods AS $id => $mod) {
 
             $nodes = explode(',', $mod['active_nodes']);
@@ -84,16 +90,43 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
         $db = $this->_getDb();
         $sqlConditions = array();
         if (!empty($conditions['node_id'])) {
-                $sqlConditions[] = 'multimod.active_nodes IN (0,' . $db->quote($conditions['node_id']) . ')';
+            $sqlConditions[] = 'multimod.active_nodes IN (0,' . $db->quote($conditions['node_id']) . ')';
         }
 
         return $this->getConditionsForClause($sqlConditions);
     }
 
 
+    public function prepareMultiModFetchOptions(array $fetchOptions)
+    {
+        $selectFields = '';
+        $joinTables = '';
+        $orderBy = '';
+
+
+        $orderBy = 'multimod.title';
+
+
+        return array(
+            'selectFields' => $selectFields,
+            'joinTables' => $joinTables,
+            'orderClause' => ($orderBy ? "ORDER BY $orderBy" : '')
+        );
+    }
+
+
+    /**
+     * @param array $forum
+     * @return bool|int
+     */
+    public function canUseMultiModeration(array $forum)
+    {
+        $return = XenForo_Visitor::getInstance()->hasPermission('general', 'ragtek_mm_canUseMultimod');
+        return $return;
+    }
+
     public function runMultiMod(array $thread, array $multiMod)
     {
-
 
         if ($multiMod['add_reply'] && $multiMod['reply'] != '') {
             $postCreater = XenForo_Visitor::getInstance()->toArray();
@@ -138,8 +171,4 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
 
         $dw->save();
     }
-
-
-    ##additionalContent##
-
 }

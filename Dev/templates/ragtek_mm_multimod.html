@@ -1,18 +1,27 @@
-<xen:if is="{$multimods}">
-    <div class="pageNavLinkGroup">
-        <div class="linkGroup">
-            <div class="Popup">
-                <a rel="Menu">{xen:phrase ragtek_mm}</a>
-                <div class="Menu">
-                    <div class="primaryContent menuHeader"><h3>{xen:phrase ragtek_mm}</h3></div>
-                    <ul class="secondaryContent blockLinksList">
-						<xen:foreach loop="$multimods" value="$mod">   
-							<li><a href="{xen:link 'threads/run-multi-mod', $thread, 'mod_id={$mod.multimod_id}'}" class="OverlayTrigger">{$mod.title}</a></li>
-						</xen:foreach>
-                    </ul>
+<xen:if is="{$show_multimods}">
+		
+	<div class="pageNavLinkGroup">
+		 <div class="linkGroup">
+		<li class="navTab inbox Popup PopupControl PopupClosed">
 
-                </div>
-             </div>
-            </div>
-            </div>
+			<a href="{xen:link threads/get-multimods, $thread}" rel="Menu" class="navLink NoPopupGadget">{xen:phrase multimods}
+		</a>
+
+		<div class="Menu JsOnly navPopup" id="MultiModMenu"
+			data-contentSrc="{xen:link 'threads/get-multimods', $thread}"
+			data-contentDest="#MultiModMenu .listPlaceholder">
+
+			<div class="menuHeader primaryContent">
+				<h3>
+					<span class="Progress InProgress"></span>
+					<a href="{xen:link conversations}" class="concealed">{xen:phrase multimods}</a>
+				</h3>
+			</div>
+
+			<div class="listPlaceholder"></div>
+
+		</div>
+	</li>
+		</div>
+		</div>
 </xen:if>
