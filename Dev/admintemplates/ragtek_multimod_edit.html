@@ -15,6 +15,10 @@
 				'{xen:phrase edit}: <em>%s</em>',
 				'{xen:phrase ragtek_mm_create_new}: <em>%s</em>'}"
             />
+	
+			<xen:textboxunit name="description" value="{$multimod.description}" label="{xen:phrase description}:"  rows="2" inputclass="Elastic">
+			</xen:textboxunit>
+	
     <xen:controlunit label="{xen:phrase active_node} :">
         <select name="active_nodes[]" class="textCtrl" multiple="multiple" size="8">
             <option value="0" {xen:selected 'in_array(0, {$multimod.active_nodes})'}>({xen:phrase all})</option>

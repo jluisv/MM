@@ -67,7 +67,8 @@ class Ragtek_MM_ControllerAdmin_Multimod extends XenForo_ControllerAdmin_Abstrac
             'move_to_node' => XenForo_Input::UINT,
             'set_thread_prefix' => XenForo_Input::UINT,
             'topic_state' => XenForo_Input::STRING,
-            'close_thread' => XenForo_Input::UINT
+            'close_thread' => XenForo_Input::UINT,
+            'description' => XenForo_Input::STRING
         ));
 
         $input['reply'] = $this->getHelper('Editor')->getMessageText('reply', $this->_input);

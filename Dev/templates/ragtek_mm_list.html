@@ -1,14 +1,24 @@
 <xen:title>{xen:phrase ragtek_multimods}</xen:title>
-<div class="secondaryContent">
-        <ol>
-			<xen:if is="{$multimods}">
+
+<xen:navigation>
+	<xen:breadcrumb source="$nodeBreadCrumbs" />
+	<xen:breadcrumb href="{xen:link full:threads, $thread}">{xen:helper threadPrefix, $thread}{$thread.title}</xen:breadcrumb>
+</xen:navigation>
+
+<xen:container var="$bodyClasses">{xen:helper nodeClasses, $nodeBreadCrumbs, $forum}</xen:container>
+<xen:container var="$searchBar.thread"><xen:include template="search_bar_thread_only" /></xen:container>
+<xen:container var="$searchBar.forum"><xen:include template="search_bar_forum_only" /></xen:container>
+
+
+
+        <ul class="secondaryContent blockLinksList">
+            <xen:if is="{$multimods}">
             <xen:foreach loop="$multimods" value="$mod">
                 <li class="listItem PopupItemLink">
-                   <a href="{xen:link 'threads/run-multi-mod', $thread, 'mod_id={$mod.multimod_id}'}" class="OverlayTrigger">{$mod.title}</a>
+                  <a href="{xen:link 'threads/run-multi-mod', $thread, 'mod_id={$mod.multimod_id}'}" class="Tooltip OverlayTrigger" title="{$mod.description}">{$mod.title}</a>
                 </li>
             </xen:foreach>
-				<xen:else />
-				{xen:phrase ragtek_mm_nothing_available}
-			</xen:if>
-        </ol>
-</div>
+                <xen:else />
+                {xen:phrase ragtek_mm_nothing_available}
+            </xen:if>
+        </ul>

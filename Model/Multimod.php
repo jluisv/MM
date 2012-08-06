@@ -104,27 +104,40 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
         $orderBy = '';
 
 
-        $orderBy = 'multimod.title';
-
-
         return array(
             'selectFields' => $selectFields,
             'joinTables' => $joinTables,
-            'orderClause' => ($orderBy ? "ORDER BY $orderBy" : '')
+            'orderClause' => 'ORDER BY multimod.title'
         );
     }
 
 
     /**
+     * @param array $thread
      * @param array $forum
-     * @return bool|int
+     * @param array $multimod
+     * @param string $errorPhraseKey
+     * @param array $nodePermissions
+     * @param array $viewingUser
+     * @return bool
      */
-    public function canUseMultiModeration(array $forum)
+    public function canUseMultiModeration(array $thread, array $forum, array $multimod = array(),&$errorPhraseKey = '',
+                                          array $nodePermissions = null, array $viewingUser = null)
     {
-        $return = XenForo_Visitor::getInstance()->hasPermission('general', 'ragtek_mm_canUseMultimod');
-        return $return;
+
+        $this->standardizeViewingUserReferenceForNode($thread['node_id'], $viewingUser, $nodePermissions);
+
+        if (!XenForo_Permission::hasPermission($viewingUser['permissions'],'general', 'ragtek_mm_canUseMultimod'))
+        {
+            return false;
+        }
+        return true;
     }
 
+    /**
+     * @param array $thread
+     * @param array $multiMod
+     */
     public function runMultiMod(array $thread, array $multiMod)
     {
 
@@ -168,6 +181,10 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
         }
 
         XenForo_CodeEvent::fire('multimod_run', array($thread, $multiMod, &$dw));
+
+        XenForo_Model_Log::logModeratorAction('thread', $thread, 'multimod', array('multimod_title' => $multiMod['title'],
+                                                                                    'description' => $multiMod['description'])
+        );
 
         $dw->save();
     }

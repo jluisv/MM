@@ -33,6 +33,7 @@ class Ragtek_MM_StaticMethods
     {
         if ($templateName == 'thread_view') {
             $template->preloadTemplate('ragtek_mm_multimod');
+            $template->preloadTemplate('preview_tooltip');
         }
 
         ##additonalPreCache##
@@ -63,7 +64,7 @@ class Ragtek_MM_StaticMethods
 
     public static function fileHashes(XenForo_ControllerAdmin_Abstract $controller, array &$hashes)
     {
-        $fileHashes = Ragtek_ragtekMM_Hashes::getHashes();
+        $fileHashes = Ragtek_MM_Hashes::getHashes();
         $hashes += $fileHashes;
     }
 

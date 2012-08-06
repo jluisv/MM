@@ -14,6 +14,7 @@ class Ragtek_MM_DataWriter_Multimod extends XenForo_DataWriter
                 'title' => array('type' => self::TYPE_STRING, 'required' => true, 'maxLength' => 50),
                 'topic_pin' => array('type' => self::TYPE_STRING, 'allowedValues' => array('leave', 'stick', 'unstick'), 'default' => 'leave'),
                 'title_start' => array('type' => self::TYPE_STRING, 'default' => ''),
+                'description' => array('type' => self::TYPE_STRING,'default' => ''),
                 'title_end' => array('type' => self::TYPE_STRING, 'default' => ''),
                 'move_to_node' => array('type' => self::TYPE_UINT, 'default' => 0),
                 'topic_state' => array('type' => self::TYPE_STRING, 'allowedValues' => array('leave', 'visible', 'moderated', 'deleted'), 'default' => 'leave'),

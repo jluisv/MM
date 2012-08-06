@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <metadata>
-  <item title="ragtek_mm_confirm" version_id="1" version_string="1.0.0"/>
-  <item title="ragtek_mm_list" version_id="11" version_string="1.0.2"/>
-  <item title="ragtek_mm_multimod" version_id="11" version_string="1.0.2"/>
+  <item title="ragtek_mm_confirm" version_id="14" version_string="1.2.0"/>
+  <item title="ragtek_mm_list" version_id="15" version_string="1.2.0"/>
+  <item title="ragtek_mm_multimod" version_id="14" version_string="1.2.0"/>
+  <item title="ragtek_mm_preview" version_id="13" version_string="1.1.0 PL1"/>
 </metadata>

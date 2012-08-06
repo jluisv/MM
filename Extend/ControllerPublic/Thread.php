@@ -18,9 +18,10 @@ class Ragtek_MM_Extend_ControllerPublic_Thread extends
         /** @var $parentReturn  XenForo_ControllerResponse_View */
         $parentReturn = parent::actionIndex();
 
-        if ($parentReturn instanceof XenForo_ControllerResponse_View
-            && $this->_getMultimodModel()->canUseMultiModeration($parentReturn->params['forum'])
-            ) {
+        if (isset($parentReturn->params) &&
+            $this->_getMultimodModel()->canUseMultiModeration($parentReturn->params['thread'], $parentReturn->params['forum'])
+            )
+             {
             $parentReturn->params += array(
                 'show_multimods' => true
             );
@@ -28,19 +29,20 @@ class Ragtek_MM_Extend_ControllerPublic_Thread extends
         return $parentReturn;
     }
 
-
-    public function actionGetMultiMods(){
+    public function actionGetmultiMods(){
         $threadId = $this->_input->filterSingle('thread_id', XenForo_Input::UINT);
 
         $ftpHelper = $this->getHelper('ForumThreadPost');
         list($thread, $forum) = $ftpHelper->assertThreadValidAndViewable($threadId);
 
-        if (!$this->_getMultimodModel()->canUseMultiModeration($forum)) {
+        if (!$this->_getMultimodModel()->canUseMultiModeration($thread, $forum)) {
             return $this->getNoPermissionResponseException();
         }
         $viewParams = array(
             'multimods' => $this->_getMultimodModel()->getAvailableMultiMods(array('node_id' => $forum)),
-            'thread' => $thread
+            'thread' => $thread,
+            'forum' => $forum,
+            'nodeBreadCrumbs' => $ftpHelper->getNodeBreadCrumbs($forum),
             );
         return $this->responseView('Ragtek_MM_ViewPublic_Get', 'ragtek_mm_list',$viewParams);
     }
@@ -59,7 +61,7 @@ class Ragtek_MM_Extend_ControllerPublic_Thread extends
         $ftpHelper = $this->getHelper('ForumThreadPost');
         list($thread, $forum) = $ftpHelper->assertThreadValidAndViewable($threadId);
 
-        if (!$this->_getMultimodModel()->canUseMultiModeration($forum)) {
+        if (!$this->_getMultimodModel()->canUseMultiModeration($thread, $forum)) {
             return $this->getNoPermissionResponseException();
         }
 
@@ -80,9 +82,11 @@ class Ragtek_MM_Extend_ControllerPublic_Thread extends
                 'multimod' => $multiMod
             );
             return $this->responseView('Ragtek_MM_Thread_MultiMod', 'ragtek_mm_confirm', $viewParams);
-
         }
     }
+
+
+
 
     /**
      * Gets the specified multimod or throws an error.
