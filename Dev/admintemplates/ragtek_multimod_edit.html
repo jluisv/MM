@@ -69,11 +69,14 @@
 </fieldset>
 	
 <fieldset>
+	
     <xen:checkboxunit label="" class="Disabler" id="reply_disabler">
         <xen:option name="add_reply" selected="{$multimod.add_reply}">{xen:phrase reply_to_thread}</xen:option>
     </xen:checkboxunit>
-
-    <xen:controlunit label="{xen:phrase reply}:" id="reply_disabler_Disabler">
+	
+	<xen:textboxunit label="{xen:phrase ragtek_mm_reply_user_id}:" name="reply_creator_user_id" value="{$multimod.reply_creator_user_id}" />
+    
+	<xen:controlunit label="{xen:phrase reply}:" id="reply_disabler_Disabler">
         <xen:hint>{xen:phrase you_may_use_bb_code}</xen:hint>
         <xen:html>{xen:raw $editorTemplate}</xen:html>
     </xen:controlunit>

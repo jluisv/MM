@@ -22,6 +22,8 @@
   <item title="ragtek_mm_not_found" global_cache="0" version_id="3" version_string="1.0.0 RC3"/>
   <item title="ragtek_mm_nothing_available" global_cache="0" version_id="11" version_string="1.1.0"/>
   <item title="ragtek_mm_prefix_explain" global_cache="0" version_id="3" version_string="1.0.0 RC3"/>
+  <item title="ragtek_mm_reply_user_id" global_cache="0" version_id="16" version_string="1.3.0 DEV"/>
+  <item title="ragtek_mm_requested_post_creator_not_found" global_cache="0" version_id="16" version_string="1.3.0 DEV"/>
   <item title="ragtek_mm_set_threadprefix_id" global_cache="0" version_id="3" version_string="1.0.0 RC3"/>
   <item title="ragtek_multimods" global_cache="0" version_id="1" version_string="1.0.0"/>
   <item title="stick" global_cache="0" version_id="1" version_string="1.0.0"/>

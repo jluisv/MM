@@ -142,7 +142,12 @@ class Ragtek_MM_Model_Multimod extends XenForo_Model
     {
 
         if ($multiMod['add_reply'] && $multiMod['reply'] != '') {
-            $postCreater = XenForo_Visitor::getInstance()->toArray();
+            if ($multiMod['reply_creator_user_id'] == 0){
+                $postCreater = XenForo_Visitor::getInstance()->toArray();
+            }
+            else {
+                $postCreater = $this->getModelFromCache('XenForo_Model_User')->getUserById($multiMod['reply_creator_user_id']);
+            }
             Ragtek_MM_Helper::createPost($postCreater, $thread['thread_id'], $multiMod['reply']);
         }
 
